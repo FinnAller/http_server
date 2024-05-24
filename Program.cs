@@ -25,7 +25,7 @@ namespace HttpListenerExample
 
             while (runServer)
             {
-                // Will wait here until we hear from a connection
+                // Create new Task for individual connections
                 HttpListenerContext ctx = await listener.GetContextAsync();
 
                 // Peel out the requests and response objects
@@ -125,7 +125,7 @@ namespace HttpListenerExample
                         await resp.OutputStream.WriteAsync(notFoundData, 0, notFoundData.Length);
                     }
                 }
-                // Aufrufe nicht bei zusatzdateien erhöhen
+                // Specific requests dont increast the count.
                 if (req.Url.AbsolutePath != "/favicon.ico")
                     pageViews += 1;
                 resp.Close();
@@ -147,11 +147,11 @@ namespace HttpListenerExample
             start = DateTime.Now;
             Console.WriteLine("Listening for connections on {0}", url);
 
-            // Handle requests
+            // Start handling requests
             Task listenTask = HandleIncomingConnections();
             listenTask.GetAwaiter().GetResult();
 
-            // Close the listener
+            // Exit
             listener.Close();
         }
     }
