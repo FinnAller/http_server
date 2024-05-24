@@ -62,7 +62,6 @@ namespace HttpListenerExample
                         pageData = File.ReadAllText(path, Encoding.UTF8);
 
                         int headindex = pageData.IndexOf("<head>");
-                        Console.WriteLine(headindex);
                         File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "log.txt"), pageData);
                         //CSS einfügen
                         data = Encoding.UTF8.GetBytes(pageData);
